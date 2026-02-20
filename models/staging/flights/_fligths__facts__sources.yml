@@ -1,0 +1,74 @@
+sources: 
+  - name: demo_src
+    description: Данные из БД авиаперелетов
+    schema: demo_src
+    tables:
+      - name: boarding_passes
+        description: Посадочные талоны
+        columns:
+          - name: ticket_no
+            description: Номер билета
+          - name: flight_id
+            description: ID рейса
+          - name: boarding_no
+            description: Номер посадочного талона
+          - name: seat_no
+            description: Номер места
+      - name: flights
+        description: Рейсы
+        config:
+          # source.table.config.freshness overrides source.config.freshness
+          freshness: 
+            warn_after:
+              count: 6
+              period: hour
+            error_after:
+              count: 10000
+              period: day
+          # changed to config in v1.10
+          loaded_at_field: actual_departure::timestamp
+        columns:
+          - name: flight_id
+            description: ID рейса
+          - name: flight_no
+            description: Номер рейса
+          - name: scheduled_departure
+            description: Запланированное время вылета
+          - name: scheduled_arrival
+            description: Запланированное время прилета
+          - name: departure_airport
+            description: Аэропорт вылета
+          - name: arrival_airport
+            description: Аэропорт прилета
+          - name: status
+            description: Статус рейса
+          - name: aircraft_code
+            description: Код модели самолета
+          - name: actual_departure
+            description: Фактическое время вылета
+          - name: actual_arrival
+            description: Фактическое время прилета
+      - name: ticket_flights
+        description: Билеты на рейсы
+        columns:
+          - name: ticket_no
+            description: Номер билета
+          - name: flight_id
+            description: ID рейса
+          - name: fare_conditions
+            description: Класс обслуживания
+          - name: amount
+            description: Стоимость билета
+      - name: tickets
+        description: Билеты
+        columns:
+          - name: ticket_no
+            description: Номер билета
+          - name: book_ref
+            description: Код бронирования
+          - name: passenger_id
+            description: ID пассажира
+          - name: passenger_name
+            description: Имя пассажира
+          - name: contact_data
+            description: Контактные данные пассажира          
