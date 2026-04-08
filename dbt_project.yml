@@ -36,5 +36,9 @@ models:
       +tags: ['staging']
 
     intermediate:
+      flights:
+        +meta:
+          owner: "dbt_project_yml@gmail.com"
+          year_created: 2025
       +tags: ['intermediate']
 
